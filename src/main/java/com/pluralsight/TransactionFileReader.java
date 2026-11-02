@@ -95,13 +95,11 @@ public class TransactionFileReader {
         }
     }
 
-    public static void searchInventory() {
+    public static void searchByMonthToDate() {
 
-        String firstDate =
-                Console.promptForString("Enter start date (yyyy-MM-dd): ");
+        String firstDate = Console.promptForString("Enter start date (yyyy-MM-dd): ");
 
-        String secondDate =
-                Console.promptForString("Enter end date (yyyy-MM-dd): ");
+        String secondDate = Console.promptForString("Enter end date (yyyy-MM-dd): ");
 
         LocalDate startDate = LocalDate.parse(firstDate);
         LocalDate endDate = LocalDate.parse(secondDate);
@@ -121,6 +119,81 @@ public class TransactionFileReader {
                             transaction.getVendor(),
                             transaction.getAmount()
                     );
+                }
+            }
+        }
+    }
+    public static void searchByPreviousMonth() {
+        LocalDate startDate = LocalDate.now().minusMonths(1).withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now().withDayOfMonth(1).minusDays(1);
+
+        HashMap<LocalDate, List<Transaction>> transactions = readTransactions();
+        for (LocalDate date : transactions.keySet()) {
+            if (!date.isBefore(startDate) && !date.isAfter(endDate)) {
+                for (Transaction transaction : transactions.get(date)) {
+                    System.out.printf(
+                            "%s | %s | %s | $%.2f%n",
+                            transaction.getDate(),
+                            transaction.getDescription(),
+                            transaction.getVendor(),
+                            transaction.getAmount());
+                }
+            }
+        }
+    }
+    public static void searchByYearToDate() {
+        LocalDate startDate = LocalDate.now().withMonth(1).withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now();
+
+        HashMap<LocalDate, List<Transaction>> transactions = readTransactions();
+        for (LocalDate date : transactions.keySet()) {
+            if (!date.isBefore(startDate) && !date.isAfter(endDate)){
+                for (Transaction transaction : transactions.get(date)){
+                    System.out.printf(
+                            "%s | %s | %s | $%.2f%n",
+                            transaction.getDate(),
+                            transaction.getDescription(),
+                            transaction.getVendor(),
+                            transaction.getAmount());
+                }
+            }
+        }
+
+    }
+
+    public static void searchByPreviousYear() {
+        LocalDate startDate = LocalDate.now().minusYears(1).withDayOfMonth(1).withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now().minusYears(1).withMonth(12).withDayOfMonth(31);
+
+        HashMap<LocalDate, List<Transaction>> transactions = readTransactions();
+        for (LocalDate date : transactions.keySet()) {
+            if (!date.isBefore(startDate) && !date.isAfter(endDate)) {
+                for (Transaction transaction : transactions.get(date)) {
+                    System.out.printf(
+                            "%s | %s | %s | $%.2f%n",
+                            transaction.getDate(),
+                            transaction.getDescription(),
+                            transaction.getVendor(),
+                            transaction.getAmount());
+                }
+            }
+        }
+    }
+    public static void searchByVendor(){
+        String vendorSearch = Console.promptForString("Enter the name of the vendor");
+        String vendor = vendorSearch;
+
+        HashMap<LocalDate, List<Transaction>> transactions = readTransactions();
+
+        for (List<Transaction> transactionList : transactions.values()) {
+            for (Transaction transaction : transactionList) {
+                if (transaction.getVendor().equalsIgnoreCase(vendor)) {
+                    System.out.println(
+                            transaction.getDate() + " | " +
+                                    transaction.getTime() + " | " +
+                                    transaction.getDescription() + " | " +
+                                    transaction.getVendor() + " | " +
+                                    transaction.getAmount());
                 }
             }
         }

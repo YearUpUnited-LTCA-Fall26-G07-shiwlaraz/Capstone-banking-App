@@ -15,10 +15,13 @@ public class Main {
         return TransactionFileReader.readTransactions();
     }
     public static void ShowScreenHome() {
-        String mainMenuText = "=== Manu Options ===\nD) Add Deposit\nP) Make Payment (Debit)\nL) Ledger\nX) Exit\nEnter Your Command";
-
+        String mainMenuText = "=== Manu Options ===\n" +
+                "D) Add Deposit \n" +
+                "P) Make Payment (Debit) \n" +
+                "L) Ledger \n" +
+                "X) Exit \n" +
+                "Enter Your Command";
         String choice;
-
         do {
             choice = Console.promptForString(mainMenuText).toUpperCase();
 
@@ -34,12 +37,12 @@ public class Main {
                     do {
                         int choice2;
                         choice1 = Console.promptForString(
-                                "=== Menu Options ===" +
-                                        "A) All" +
-                                        "D) Deposit" +
-                                        "P) Payments" +
-                                        "R) Report" +
-                                        "0) Back" +
+                                "=== Menu Options === \n" +
+                                        "A) All \n" +
+                                        "D) Deposit \n" +
+                                        "P) Payments \n" +
+                                        "R) Report \n" +
+                                        "0) Back \n" +
                                         "Enter Your Command\n"
                         ).toUpperCase();
                         switch (choice1) {
@@ -56,18 +59,30 @@ public class Main {
                             case "R":
                                 do {
                                     choice2 = Console.promptForInt(
-                                            "=== Reports Menu ===" +
-                                                    "1) Month To Date" +
-                                                    "2) Previous Month" +
-                                                    "3) Year To Date" +
-                                                    "4) Previous Year" +
-                                                    "5) Search by Vendor" +
-                                                    "0) Back" +
+                                            "=== Reports Menu === \n" +
+                                                    "1) Month To Date \n" +
+                                                    "2) Previous Month \n" +
+                                                    "3) Year To Date \n" +
+                                                    "4) Previous Year \n" +
+                                                    "5) Search by Vendor \n" +
+                                                    "0) Back \n" +
                                                     "Enter Your Command\n"
                                     );
                                     switch (choice2) {
                                         case 1:
-                                            TransactionFileReader.searchInventory();
+                                            TransactionFileReader.searchByMonthToDate();
+                                            break;
+                                        case 2:
+                                            TransactionFileReader.searchByPreviousMonth();
+                                            break;
+                                        case 3:
+                                            TransactionFileReader.searchByYearToDate();
+                                            break;
+                                        case 4:
+                                            TransactionFileReader.searchByPreviousYear();
+                                            break;
+                                        case 5:
+                                            TransactionFileReader.searchByVendor();
                                             break;
                                     }
                                 } while (choice2 != 0);
