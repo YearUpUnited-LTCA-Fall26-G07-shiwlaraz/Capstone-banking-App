@@ -48,6 +48,23 @@ public class TransactionFileReader {
 
         return transactions;
     }
+    public static void readAllTransactions() {
+        HashMap<LocalDate, List<Transaction>> transactions = readTransactions();
+
+        for (List<Transaction> transactionList : transactions.values()) {
+            for (Transaction transaction : transactionList) {
+                System.out.println(
+                        transaction.getDate() + " | " +
+                                transaction.getTime() + " | " +
+                                transaction.getDescription() + " | " +
+                                transaction.getVendor() + " | " +
+                                transaction.getAmount()
+                );
+            }
+        }
+
+    }
+
 
     public static void depositTransactions() {
 
@@ -79,8 +96,6 @@ public class TransactionFileReader {
 
             for (Transaction transaction : transactionList) {
 
-                double temp = transaction.getAmount();
-
                 if (transaction.getAmount() < 0.0) {
 
                     System.out.println(
@@ -97,12 +112,8 @@ public class TransactionFileReader {
 
     public static void searchByMonthToDate() {
 
-        String firstDate = Console.promptForString("Enter start date (yyyy-MM-dd): ");
-
-        String secondDate = Console.promptForString("Enter end date (yyyy-MM-dd): ");
-
-        LocalDate startDate = LocalDate.parse(firstDate);
-        LocalDate endDate = LocalDate.parse(secondDate);
+        LocalDate startDate = LocalDate.now().withDayOfMonth(1);
+        LocalDate endDate = LocalDate.now();
 
         HashMap<LocalDate, List<Transaction>> transactions = readTransactions();
 
@@ -160,9 +171,8 @@ public class TransactionFileReader {
         }
 
     }
-
     public static void searchByPreviousYear() {
-        LocalDate startDate = LocalDate.now().minusYears(1).withDayOfMonth(1).withDayOfMonth(1);
+        LocalDate startDate = LocalDate.now().minusYears(1).withMonth(1).withDayOfMonth(1);
         LocalDate endDate = LocalDate.now().minusYears(1).withMonth(12).withDayOfMonth(31);
 
         HashMap<LocalDate, List<Transaction>> transactions = readTransactions();

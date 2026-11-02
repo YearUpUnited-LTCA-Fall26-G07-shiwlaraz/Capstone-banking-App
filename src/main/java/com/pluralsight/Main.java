@@ -42,14 +42,13 @@ public class Main {
                                         "D) Deposit \n" +
                                         "P) Payments \n" +
                                         "R) Report \n" +
-                                        "0) Back \n" +
+                                        "H) To go back \n" +
                                         "Enter Your Command\n"
                         ).toUpperCase();
                         switch (choice1) {
                             case "A":
-                                TransactionFileReader.readTransactions();
+                                TransactionFileReader.readAllTransactions();
                                 break;
-
                             case "D":
                                 TransactionFileReader.depositTransactions();
                                 break;
@@ -87,8 +86,10 @@ public class Main {
                                     }
                                 } while (choice2 != 0);
                                 break;
+                            case "H":
+                                break;
                         }
-                    } while (!choice1.equals("0"));
+                    } while (!choice1.equals("H"));
                     break;
             }
         } while (!choice.equals("X"));

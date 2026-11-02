@@ -13,7 +13,7 @@ public class TransactionFileWriter {
     public static void addDeposit() {
         String description = Console.promptForString("Enter description");
         String vendor = Console.promptForString("Enter Vendor");
-        String doubleAmount = Console.promptForString("Enter Vendor");
+        String doubleAmount = Console.promptForString("Enter Deposit Amount");
         Double amount = Double.parseDouble(doubleAmount);
         if (amount <= (double)0.0F) {
             System.out.println("Deposit amount must be greater than zero.");
